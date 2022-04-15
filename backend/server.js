@@ -8,20 +8,40 @@ app.use(express.urlencoded())
 
 const mongoose = require('mongoose')
 
-const db = mongoose.connection
-const url = "mongodb://127.0.0.1:27017/posts"
+// const db = mongoose.connection
+// const db2 = mongoose.connection
 
-mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true })
+// const url = "mongodb://127.0.0.1:27017/posts"
+// const url2 = "mongodb://127.0.0.1:27017/userinfo"
 
-db.once('open', _ => {
-  console.log('Database connected: ', url);
+// mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true })
+// mongoose.connect(url2, { useUnifiedTopology: true, useNewUrlParser: true })
+
+// const dbPosts = mongoose.connection.useDb("posts");
+// const dbUserInfo = mongoose.connection.useDb("userinfo");
+
+const dbPosts = mongoose.createConnection("mongodb://127.0.0.1:27017/posts");
+const dbUserInfo = mongoose.createConnection("mongodb://127.0.0.1:27017/userinfo");
+
+
+dbPosts.once('open', _ => {
+  console.log('Database connected: posts');
 });
 
-db.on('error', err => {
-  console.error('connection error: ', err);
-})
+dbUserInfo.once('open', _ => {
+  console.log('Database connected: userinfo');
+});
+
+dbPosts.on('error', err => {
+  console.error('connection error: posts');
+});
+
+dbUserInfo.on('error', err => {
+  console.error('connection error: userinfo');
+});
 
 const Schema = mongoose.Schema
+
 const postsSchema = Schema({
   postID: {
     type: Number,
@@ -57,7 +77,7 @@ const postsSchema = Schema({
   }
 }, {collection: 'feed'}) // Note that within our DB, we are storing these images in a collection called feed. 
 
-const POSTS = mongoose.model('POSTS', postsSchema)
+const POSTS = dbPosts.model('POSTS', postsSchema)
 
 app.get("/", function (req, res) {
   // GET "/" should return a list of all posts stored in our database
@@ -96,7 +116,7 @@ app.post("/post/add", function (req, res) {
 
 app.delete("/post/delete", function (req, res) {
   // DELETE "/delete" deletes a post according to the postID
-  POSTS.findOneAndDelete({title: req.body.postID}, (error) => {
+  POSTS.findOneAndDelete({postID: req.body.postID}, (error) => {
     if (error) {
       res.json({ status: "failure", error: error});
     } else {
@@ -105,88 +125,89 @@ app.delete("/post/delete", function (req, res) {
   })
 });
 
+/* -------------BREAK----------*/
+
+const userInfoSchema = Schema({
+  userID: {
+    type: Number,
+    required: true
+  },
+  name: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true
+  },
+  phone: {
+    type: String,
+    required: true
+  },
+  posted: {
+    type: [Number],
+    required: true
+  },
+  liked: {
+    type: [Number],
+    required: false
+  },
+}, {collection: 'users'}) // Note that within our DB, we are storing these images in a collection called feed. 
+
+const USERINFO = dbUserInfo.model('USERINFO', userInfoSchema)
+
+app.get("/user/:userID", function (req, res) {
+  // TODO: GET "/user/:userID" should return one user by userID
+});
+
+app.post("/user/add", function (req, res) {
+  // POST "/add" adds a post to our database
+  const user = new USERINFO({
+    userID: req.body.userID,
+    name: req.body.name,
+    password: req.body.password,
+    email: req.body.email,
+    phone: req.body.phone,
+    posted: req.body.posted,
+    liked: req.body.liked,
+  });
+  user.save((error, document) => {
+    if (error) {
+    res.json({ status: "failure", error: error});
+    } else {
+    res.json({
+        status: "success",
+        content: req.body
+    });
+    }
+  })
+});
+
+app.put("/user/post/:postID", function (req, res) {
+// TODO: PUT "/user/post/:postID" update the posted array of the user
+});
+
+app.put("/user/like/:postID", function (req, res) {
+// TODO: PUT "/user/like/:postID" update the liked array of the user
+})
+
+app.delete("/user/delete", function (req, res) {
+  // DELETE "/delete" deletes a post from a specific user
+
+  // TODO: find user based on userID, then delete post form user's "posted"
+  USERINFO.findOneAndDelete({title: req.body.postID}, (error) => {
+    if (error) {
+    res.json({ status: "failure", error: error});
+    } else {
+    res.json({ status: "success"});
+    }
+  })
+});
+
 app.listen(port, () => {
   console.log(`Listening on port ${port}`)
 })
-
-
-const userInfoSchema = Schema({
-    userID: {
-      type: Number,
-      required: true
-    },
-    name: {
-      type: String,
-      required: true
-    },
-    password: {
-      type: String,
-      required: true
-    },
-    email: {
-      type: String,
-      required: true
-    },
-    phone: {
-      type: Number,
-      required: true
-    },
-    posted: {
-      type: [Number],
-      required: true
-    },
-    liked: {
-      type: [Number],
-      required: true
-    },
-  }, {collection: 'users'}) // Note that within our DB, we are storing these images in a collection called feed. 
-  
-  const USERINFO = mongoose.model('USERINFO', userInfoSchema)
-
-  app.get("/user/:userID", function (req, res) {
-    // TODO: GET "/user/:userID" should return one user by userID
-  });
-
-  app.post("/user/add", function (req, res) {
-    // POST "/add" adds a post to our database
-    const user = new POSTS({
-        userID: req.body.userID,
-        name: req.body.name,
-        password: req.body.password,
-        email: req.body.email,
-        phone: req.body.phone,
-        posted: req.body.posted,
-        liked: req.body.liked,
-    });
-    user.save((error, document) => {
-      if (error) {
-        res.json({ status: "failure", error: error});
-      } else {
-        res.json({
-          status: "success",
-          content: req.body
-        });
-      }
-    })
-  });
-
-  app.put("/user/post/:postID", function (req, res) {
-    // TODO: PUT "/user/post/:postID" update the posted array of the user
-  });
-
-  app.put("/user/like/:postID", function (req, res) {
-    // TODO: PUT "/user/like/:postID" update the liked array of the user
-  })
-  
-  app.delete("/user/delete", function (req, res) {
-    // DELETE "/delete" deletes a post from a specific user
-
-    // TODO: find user based on userID, then delete post form user's "posted"
-    USERINFO.findOneAndDelete({title: req.body.postID}, (error) => {
-      if (error) {
-        res.json({ status: "failure", error: error});
-      } else {
-        res.json({ status: "success"});
-      }
-    })
-  });
