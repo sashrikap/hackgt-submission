@@ -1,12 +1,18 @@
 .login {
-    width: 400px;
-    background: #fff;
-    border: 1px solid #dddfe2;
-    box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: auto;
     border-radius: 8px;
     padding: 1rem;
     align-items: center;
     text-align: center;
+}
+
+#signInText {
+    font-size: 55px;
+    margin-bottom: 30px;
 }
 
 .login > input {
@@ -14,20 +20,40 @@
     border: 2px solid #dddfe2;
     outline: none;
     color: #1d2129;
-    margin: 0.5rem 0;
-    padding: 0.5rem 0.75rem;
-    width: 92%;
+    margin: 0.75rem 0;
+    padding: 0.8rem 1rem;
+    width: 50%;
     font-size: 1rem;
 }
 
 .login > .button {
-    background: #1877f2;
-    border: 1px solid #1877f2;
+    background: #63853F;
     color: #fff;
     font-size: 1.25rem;
-    padding: 0.5rem;
-    margin: 0.5rem 0;
-    border-radius: 8px;
+    padding: 1.2rem 2rem;
+    margin: 2.5rem 0;
+    border-radius: 35px;
     outline: none;
     cursor: pointer;
+}
+
+.bottom-text {
+    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.here-text {
+    margin: 0px 7px;
+    color: rgb(80, 76, 76);
+}
+
+#middleBorder {
+    width: 100px;
+    height: 50px;
+    border-top: black 3px solid;
+}
+
+#username {
+    font-size: 100px;
 }
