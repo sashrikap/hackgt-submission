@@ -11,7 +11,9 @@ const Register = () => {
         name: "",
         email: "",
         password: "",
-        reEnterPassword: ""
+        reEnterPassword: "",
+        posted: [],
+        liked: []
     })
 
     const handleChange = e => {
@@ -25,9 +27,11 @@ const Register = () => {
     const register = () => {
         const { name, email, password, reEnterPassword } = user
         if (name && email && password && (password === reEnterPassword)) {
-            alert("posted!")
             axios.post("http://localhost:9002/register", user)
-            .then( res => console.log(res) )
+            .then( res =>  {
+                console.log(res);
+                alert(res.data.message)
+            })
             // should only navigate when the message is successful, wait for backend side
             navigate("/login")
         } else {
