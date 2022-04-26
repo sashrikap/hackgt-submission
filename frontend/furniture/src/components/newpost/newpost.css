@@ -1,0 +1,26 @@
+.newpost {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+.navHolder {
+
+
+}
+
+.box {
+
+
+}
+
+.topborderbox{
+    /*        position: absolute;*/
+    width: 1379px;
+    height: 61px;
+    /*        left: 28px;
+            top: 17px;*/
+    border: 8px solid #000000;
+    box-sizing: border-box;
+}
