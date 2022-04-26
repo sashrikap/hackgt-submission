@@ -8,27 +8,31 @@ app.use(express.urlencoded())
 
 const mongoose = require('mongoose')
 
-const db = mongoose.connection
-const url = "mongodb://127.0.0.1:27017/posts"
+const dbPosts = mongoose.createConnection("mongodb://127.0.0.1:27017/posts");
+const dbUserInfo = mongoose.createConnection("mongodb://127.0.0.1:27017/userinfo");
 
-mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true })
 
-db.once('open', _ => {
-  console.log('Database connected: ', url);
+dbPosts.once('open', _ => {
+  console.log('Database connected: posts');
 });
 
-db.on('error', err => {
-  console.error('connection error: ', err);
-})
+dbUserInfo.once('open', _ => {
+  console.log('Database connected: userinfo');
+});
+
+dbPosts.on('error', err => {
+  console.error('connection error: posts');
+});
+
+dbUserInfo.on('error', err => {
+  console.error('connection error: userinfo');
+});
 
 const Schema = mongoose.Schema
+
 const postsSchema = Schema({
-  postID: {
-    type: Number,
-    required: true
-  },
   userID: {
-    type: Number,
+    type: mongoose.Types.ObjectId,
     required: true
   },
   title: {
@@ -57,7 +61,38 @@ const postsSchema = Schema({
   }
 }, {collection: 'feed'}) // Note that within our DB, we are storing these images in a collection called feed. 
 
-const POSTS = mongoose.model('POSTS', postsSchema)
+const POSTS = dbPosts.model('POSTS', postsSchema)
+
+const userInfoSchema = Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true
+  },
+  phone: {
+    type: String,
+    required: true
+  },
+  posted: {
+    type: [mongoose.Types.ObjectId],
+    required: true
+  },
+  liked: {
+    type: [mongoose.Types.ObjectId],
+    required: false
+  },
+}, {collection: 'users'}) // Note that within our DB, we are storing these images in a collection called feed. 
+
+const USERINFO = dbUserInfo.model('USERINFO', userInfoSchema)
+
+/* --------------- BREAK -----------------*/
 
 app.get("/", function (req, res) {
   // GET "/" should return a list of all posts stored in our database
@@ -66,15 +101,20 @@ app.get("/", function (req, res) {
   })
 });
 
-app.get("/post/:postID", function (req, res) {
-  // TODO: GET "/post/:postID" should return one post by postID
+app.get("/post/:postID", async(req, res) => {
+  // GET "/post/:postID" should return one post by postID
+  try {
+    const post = await POSTS.findById(req.params.postID);
+    res.json(post);
+  } catch(e) {
+    res.send({message: "Error in Fetching post"});
+  }
 });
 
-app.post("/post/add", function (req, res) {
+app.post("/newpost/:userID", async(req, res) => {
   // POST "/add" adds a post to our database
   const post = new POSTS({
-    postID: req.body.postID,
-    userID: req.body.userID,
+    userID: req.params.userID, // FRONTEND PPL DONT NEED TO INCLUDE THIS
     title: req.body.title,
     category: req.body.category,
     imageURL: req.body.imageURL,
@@ -82,111 +122,103 @@ app.post("/post/add", function (req, res) {
     location: req.body.location,
     description: req.body.description,
   });
-  post.save((error, document) => {
+  
+  var newPostID;
+
+  await post.save((error, new_post) => {
     if (error) {
       res.json({ status: "failure", error: error});
     } else {
-      res.json({
+      newPostID = new_post._id;
+    }
+  });
+  
+  try {
+    const user = await USERINFO.findById(req.params.userID);
+    user.posted.push(newPostID);
+    await user.save();
+    res.send(user);
+  } catch(e) {
+      res.send({message: "cannot add to posted list"});
+  }
+});
+
+app.delete("/deletepost/:userID/:postID", async(req, res) => {
+  // DELETE "/delete" deletes a post according to the postID
+  await POSTS.findByIdAndDelete(req.params.postID, (error) => {
+    if (error) {
+      res.json({ status: "failure", error: error});
+    }
+  }).clone();
+
+  try {        
+    const user = await USERINFO.findById(req.params.userID);
+    const index = user.posted.indexOf(req.params.postID);
+    if (index > -1) {
+      user.posted.splice(index, 1);
+    }
+    await user.save();
+    res.send(user);
+  } catch(e) {
+      res.send(e);
+  }
+});
+
+app.put("/likepost/:userID/:postID", async(req, res) => {
+  // DELETE "/delete" deletes a post according to the postID
+  try {        
+    const user = await USERINFO.findById(req.params.userID);
+    user.liked.push(req.params.postID);
+    await user.save();
+    res.send(user);
+  } catch(e) {
+      res.send(e);
+  }
+});
+
+/* -------------BREAK----------*/
+
+app.get("/user/fetch", async(req, res) => {
+  // TODO: GET "/user/:userID" should return one user by userID
+  try {
+    const user = await USERINFO.findOne({email: req.body.email});
+    res.json(user);
+  } catch(e) {
+    res.send({message: "Error in Fetching User"});
+  }
+});
+
+app.post("/user/newuser", function (req, res) {
+  // POST "/add" adds a post to our database
+  const user = new USERINFO({
+    name: req.body.name,
+    password: req.body.password,
+    email: req.body.email,
+    phone: req.body.phone,
+    posted: req.body.posted,
+    liked: req.body.liked,
+  });
+  user.save((error, newUser) => {
+    if (error) {
+    res.json({ status: "failure", error: error});
+    } else {
+    res.json({
         status: "success",
+        userID: newUser._id,
         content: req.body
-      });
+    });
     }
   })
 });
 
-app.delete("/post/delete", function (req, res) {
-  // DELETE "/delete" deletes a post according to the postID
-  POSTS.findOneAndDelete({title: req.body.postID}, (error) => {
-    if (error) {
-      res.json({ status: "failure", error: error});
-    } else {
-      res.json({ status: "success"});
-    }
+
+app.get("/users", function (req, res) {
+  // GET "/" return all users stored in our database
+  USERINFO.find().then((users) => {
+    res.json({ message: "Return all users.", users: users});
   })
 });
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`)
 })
-
-
-const userInfoSchema = Schema({
-    userID: {
-      type: Number,
-      required: true
-    },
-    name: {
-      type: String,
-      required: true
-    },
-    password: {
-      type: String,
-      required: true
-    },
-    email: {
-      type: String,
-      required: true
-    },
-    phone: {
-      type: Number,
-      required: true
-    },
-    posted: {
-      type: [Number],
-      required: true
-    },
-    liked: {
-      type: [Number],
-      required: true
-    },
-  }, {collection: 'users'}) // Note that within our DB, we are storing these images in a collection called feed. 
-  
-  const USERINFO = mongoose.model('USERINFO', userInfoSchema)
-
-  app.get("/user/:userID", function (req, res) {
-    // TODO: GET "/user/:userID" should return one user by userID
-  });
-
-  app.post("/user/add", function (req, res) {
-    // POST "/add" adds a post to our database
-    const user = new POSTS({
-        userID: req.body.userID,
-        name: req.body.name,
-        password: req.body.password,
-        email: req.body.email,
-        phone: req.body.phone,
-        posted: req.body.posted,
-        liked: req.body.liked,
-    });
-    user.save((error, document) => {
-      if (error) {
-        res.json({ status: "failure", error: error});
-      } else {
-        res.json({
-          status: "success",
-          content: req.body
-        });
-      }
-    })
-  });
-
-  app.put("/user/post/:postID", function (req, res) {
-    // TODO: PUT "/user/post/:postID" update the posted array of the user
-  });
-
-  app.put("/user/like/:postID", function (req, res) {
-    // TODO: PUT "/user/like/:postID" update the liked array of the user
-  })
-  
-  app.delete("/user/delete", function (req, res) {
-    // DELETE "/delete" deletes a post from a specific user
-
-    // TODO: find user based on userID, then delete post form user's "posted"
-    USERINFO.findOneAndDelete({title: req.body.postID}, (error) => {
-      if (error) {
-        res.json({ status: "failure", error: error});
-      } else {
-        res.json({ status: "success"});
-      }
-    })
-  });

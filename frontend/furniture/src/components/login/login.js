@@ -1,12 +1,16 @@
 import React, {useState} from "react"
 import "./login.css"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 const Login = () => {
 
+    let navigate = useNavigate()
+
     const [user, setUser] = useState({
         email: "",
-        password: ""
+        password: "",
+        status: false
     })
 
     const handleChange = e => {
@@ -23,6 +27,8 @@ const Login = () => {
             alert("Submitting...")
             axios.post("http://localhost:9002/login", user)
             .then( res => alert(res.data.message) )
+            // should only navigate when the message is successful, wait for backend side
+            navigate("/")
         } else {
             alert("invalid input") 
         }
@@ -30,12 +36,16 @@ const Login = () => {
     
     return (
         <div className="login">
-            <h1>login</h1>
-            <input type="text" name = "email" value = {user.email} placeholder="Enter your email" onChange={ handleChange}></input>
+            <div id="signInText">Sign In</div>
+            <div id="middleBorder"></div>
+            <input type="text" name = "email" value = {user.email} placeholder="Enter your username" onChange={ handleChange}></input>
             <input type="password" name = "password" value = {user.password} placeholder="Enter your password" onChange={ handleChange}></input>
             <div className="button" onClick={ login } >Login</div>
-            <div>or</div>
-            <div className="button">Register</div>
+            <div className="bottom-text">
+                <div>Don't have an account? Click</div> 
+                <div className="here-text" onClick={() => navigate("/register")}> here </div>
+                <div>to register!</div>
+            </div>
         </div>
     )
 }
