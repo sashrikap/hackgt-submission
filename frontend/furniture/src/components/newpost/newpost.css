@@ -1,8 +1,8 @@
 .newpost {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-around;
+    align-items: center;
+    /*justify-content: space-around;*/
 }
 
 .navHolder {
@@ -10,9 +10,29 @@
 
 }
 
+.listText {
+    font-weight: 900;
+
+}
+
+
 .box {
 
 
+}
+
+.formbox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 20%;
+    width: 100%;
+    height: 60%;
+    background: #7F9767;
+    padding: 17% 20%;
+    border-radius: 5%;
+    font-weight: 300;
 }
 
 .topborderbox{
