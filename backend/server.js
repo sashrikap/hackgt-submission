@@ -37,6 +37,14 @@ const postsSchema = Schema({
     type: mongoose.Types.ObjectId,
     required: true
   },
+  username: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true
+  },
   title: {
     type: String,
     required: true
@@ -94,11 +102,59 @@ const userInfoSchema = Schema({
 
 const USERINFO = dbUserInfo.model('USERINFO', userInfoSchema)
 
+var ObjectID = require('mongodb').ObjectID;
 /* --------------- BREAK -----------------*/
 
 app.get("/", function (req, res) {
   // GET "/" should return a list of all posts stored in our database
   POSTS.find().then((feed) => {
+    res.send({ message: "Return all posts.", posts: feed});
+  })
+});
+
+app.get("/filter", function (req, res) {
+  console.log(req.body);
+  // GET "/filter" should return a list of all posts stored in our database that match the filters
+  // TODO: add support for "other"
+
+  // the following consts are all arrays?
+  const category = req.body.category;
+  const price = req.body.price;
+  const location = req.body.location;
+  var query = {};
+
+  // query = $and: [
+  //   "category" : {$in: category},
+  //   "price" : {$in: price},
+  //   "location" : {$in: location},
+  // ]
+
+
+  if (category) {
+      query.category = {$in: category};
+  }
+
+  if (price) {
+      query.price = {$in: price};
+  }
+
+  if (location) {
+      query.location = {$in: location};
+  }
+
+  // $and: [
+    //   {'category': { $exists: true }},
+    //   {'category': category},
+    // ],
+    // $and: [
+    //   {'location': { $exists: true }},
+    //   {'location': location},
+    // ],
+    // $and: [
+    //   {'price': { $exists: true }},
+    //   {'price': price},
+    // ]
+  POSTS.find(query).then((feed) => {
     res.json({ message: "Return all posts.", posts: feed});
   })
 });
@@ -115,8 +171,13 @@ app.get("/post/:postID", async(req, res) => {
 
 app.post("/newpost/:userID", async(req, res) => {
   // POST "/add" adds a post to our database
+  var newPostID = new ObjectID();
+  const user = await USERINFO.findById(req.params.userID);
   const post = new POSTS({
+    _id: newPostID,
     userID: req.params.userID, // FRONTEND PPL DONT NEED TO INCLUDE THIS
+    username: user.name,
+    email: user.email,
     title: req.body.title,
     category: req.body.category,
     imageURL: req.body.imageURL,
@@ -125,18 +186,13 @@ app.post("/newpost/:userID", async(req, res) => {
     description: req.body.description,
   });
   
-  var newPostID;
-
   await post.save((error, new_post) => {
     if (error) {
       res.json({ status: "failure", error: error});
-    } else {
-      newPostID = new_post._id;
     }
   });
   
   try {
-    const user = await USERINFO.findById(req.params.userID);
     user.posted.push(newPostID);
     await user.save();
     res.send(user);
@@ -194,6 +250,21 @@ app.post("/login", async(req, res) => {
       }
     } else {
       res.send({ message: "User not registered"})
+    }
+  })
+});
+
+app.get("/user/:userID", async(req, res) => {
+  // TODO: GET "/user/:userID" should return one user by userID
+  USERINFO.findById(req.params.userID, (err, user) => {
+    if (err) {
+      res.send({error: err})
+    } else if (user) {
+      POSTS.find({ _id: { $in: user.posted } }, (err, posts) => {
+        if (posts) {
+          res.send({user: user, posts: posts})
+        }
+      })
     }
   })
 });

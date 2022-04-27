@@ -5,19 +5,21 @@ import "./navstart.css"
 const NavStart = () => {
 
     let navigate = useNavigate();
+    var userID = window.location.href.split("/").pop();
+    console.log(window.location.href.split("/").pop());
 
     const routeChangeHome = () =>{
-        let path = `/`;
+        let path = `/` + userID;
         navigate(path);
     }
 
     const routeChangeNewPost = () =>{
-        let path = `newpost`;
+        let path = `newpost/` + userID;
         navigate(path);
     }
 
     const routeChangeYourProfile = () =>{
-        let path = `profile`;
+        let path = `profile/` + userID;
         navigate(path);
     }
     

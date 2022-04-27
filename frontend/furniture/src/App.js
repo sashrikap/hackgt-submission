@@ -9,17 +9,18 @@ import Newpost from "./components/newpost/newpost";
 import Profile from "./components/profile/profile";
 
 function App() {
+  console.log(window.location.href.split("/").pop())
   return (
     <Router>
       <div className="App">
-        <NavStart></NavStart>
+        <NavStart userid={window.location.href.split("/").pop()}></NavStart>
         <div className='circle'>
           <Routes>
-            <Route exact path='/' element={< Homepage />} ></Route>
+            <Route path='/:userID' element={< Homepage />} ></Route>
             <Route exact path='/login' element={< Login />}></Route>
             <Route exact path='/register' element={< Register />}></Route>
-            <Route exact path='/newpost' element={< Newpost />}></Route>
-            <Route exact path='/profile' element={< Profile />}></Route>
+            <Route path='/newpost/:userID' element={< Newpost />}></Route>
+            <Route path='/profile/:userID' element={< Profile />}></Route>
           </Routes>
         </div>
       </div>
