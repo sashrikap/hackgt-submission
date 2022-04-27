@@ -1,5 +1,21 @@
 .usernameText {
     font-size: 25px;
+    font-weight: 600;
+}
+
+.profilepic {
+    width: 60%;
+    height: 60%;
+
+}
+
+.emailText {
+    font-size: 25px;
+    font-weight: 300;
+}
+
+.phoneText {
+    font-size: 25px;
     font-weight: 300;
 }
 
@@ -16,6 +32,10 @@
 }
 
 .biobox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
     margin-top: 20%;
     width: 80%;
     height: 40%;

@@ -31,6 +31,7 @@ const Profile = () => {
                 <div id="homeText">Your Profile</div>
                 <div className="biobox">
                     <div/>
+                    <img className="profilepic" src={require("./download-5 1.png")} alt="empty profile pic"/>
                     <div className="usernameText">{"Username: " + data.user.name}</div>
                     <div className="usernameText">{"Email: " + data.user.email}</div>
                     {/* <div className="usernameText">Phone #: 123-456-7890</div> */}

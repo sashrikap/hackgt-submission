@@ -6,6 +6,11 @@ import axios from 'axios';
 const Homepage = () => {
     var url = window.location.href
     const [data, setData] = useState();
+    const [category, setCategory] = useState([]);
+    const [price, setPrice] = useState([]);
+    const [location, setLocation] = useState([]);
+
+
     const getPostsData = () => {
         axios.get("http://localhost:9002/")
           .then((data) => {
@@ -15,7 +20,8 @@ const Homepage = () => {
     };
 
     const filter = () => {
-        axios.get("http://localhost:9002/filter")
+        query = {}
+        axios.get("http://localhost:9002/filter", )
           .then((data) => {
               setData(data.data);
               console.log(data)})
@@ -45,7 +51,7 @@ const Homepage = () => {
                             <div className="title">Furniture: </div>
                             <div className="row">
                                 <label class="container">
-                                    <input type="checkbox"></input>
+                                    <input type="checkbox" onclick=""></input>
                                     <span class="checkmark"></span>
                                     <div className="name">Bedroom</div>
                                 </label>
@@ -110,7 +116,7 @@ const Homepage = () => {
                                 </label>
                             </div>
                         </div>
-                        <button className="searchbut">search</button>
+                        <button className="searchbut" onclick="filter()">search</button>
                     </form>
                 </div>
             </div>
