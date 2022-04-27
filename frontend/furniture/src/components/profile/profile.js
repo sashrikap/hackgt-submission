@@ -5,18 +5,45 @@ import axios from 'axios';
 
 const Profile = () => {
     const userID = window.location.href.split("/").pop();
-    const [data, setData] = useState();
-    const getPostsData = () => {
+    const [data, setData] = useState({user:{}, posts:[]});
+    const getPostsData = async () => {
         axios.get("http://localhost:9002/user/"+userID)
           .then((data) => {
               setData(data.data);
               console.log(data)})
           .catch((error) => console.log(error))
     };
-
+    getPostsData();
     useEffect(() => {
+        console.log("start set data")
         getPostsData();
+        console.log(data)
     }, []);
+    // async function axiosTest() {
+    //     try {
+    //       const {data:response} = await axios.get("http://localhost:9002/user/"+userID) //use data destructuring to get data from the promise object
+    //       return response
+    //     }
+  
+    //     catch (error) {
+    //       console.log(error);
+    //     }
+
+    // }
+    // const axiosTestResult = axiosTest(); 
+    // console.log(axiosTestResult)
+    // const getPostsData = async () => {
+    //     const user = await axios.get("http://localhost:9002/user/"+userID);
+    //     console.log(user.data);
+    //     setData(user.data);
+    // };
+    
+    // getPostsData();
+
+    // useEffect(() => {
+       
+    //     getPostsData();
+    // }, []);
 
     return (
         <div className="homepage">

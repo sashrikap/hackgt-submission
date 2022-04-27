@@ -20,7 +20,7 @@ const Homepage = () => {
     };
 
     const filter = () => {
-        query = {}
+        var query = {};
         axios.get("http://localhost:9002/filter", )
           .then((data) => {
               setData(data.data);

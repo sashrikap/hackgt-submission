@@ -49,7 +49,7 @@ const Login = () => {
         <div className="login">
             <div id="signInText">Sign In</div>
             <div id="middleBorder"></div>
-            <input type="text" name = "email" value = {user.email} placeholder="Enter your username" onChange={ handleChange}></input>
+            <input type="text" name = "email" value = {user.email} placeholder="Enter your email" onChange={ handleChange}></input>
             <input type="password" name = "password" value = {user.password} placeholder="Enter your password" onChange={ handleChange}></input>
             <div className="button" onClick={ login } >Login</div>
             <div className="bottom-text">

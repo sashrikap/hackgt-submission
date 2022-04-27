@@ -130,15 +130,15 @@ app.get("/filter", function (req, res) {
   // ]
 
 
-  if (category) {
+  if (category.length > 0) {
       query.category = {$in: category};
   }
 
-  if (price) {
+  if (price.length > 0) {
       query.price = {$in: price};
   }
 
-  if (location) {
+  if (location.length > 0) {
       query.location = {$in: location};
   }
 
