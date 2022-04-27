@@ -1,10 +1,12 @@
+const cors = require('cors')
 const express = require('express')
 const app = express()
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 9002
 
 app.use(express.json())
 app.use(express.urlencoded())
+app.use(cors())
 
 const mongoose = require('mongoose')
 
@@ -78,7 +80,7 @@ const userInfoSchema = Schema({
   },
   phone: {
     type: String,
-    required: true
+    required: false
   },
   posted: {
     type: [mongoose.Types.ObjectId],
@@ -178,35 +180,50 @@ app.put("/likepost/:userID/:postID", async(req, res) => {
 
 /* -------------BREAK----------*/
 
-app.get("/user/fetch", async(req, res) => {
+app.post("/login", async(req, res) => {
   // TODO: GET "/user/:userID" should return one user by userID
-  try {
-    const user = await USERINFO.findOne({email: req.body.email});
-    res.json(user);
-  } catch(e) {
-    res.send({message: "Error in Fetching User"});
-  }
+
+  USERINFO.findOne({email: req.body.email}, (err, user) => {
+    if (err) {
+      res.send({message: "Log in failed", error: err})
+    } else if (user) {
+      if (req.body.password == user.password) {
+        res.send({ message: "Log in succeeded", user: user})
+      } else {
+        res.send({ message: "Password not match "})
+      }
+    } else {
+      res.send({ message: "User not registered"})
+    }
+  })
 });
 
-app.post("/user/newuser", function (req, res) {
+app.post("/register", async(req, res) => {
   // POST "/add" adds a post to our database
-  const user = new USERINFO({
-    name: req.body.name,
-    password: req.body.password,
-    email: req.body.email,
-    phone: req.body.phone,
-    posted: req.body.posted,
-    liked: req.body.liked,
-  });
-  user.save((error, newUser) => {
-    if (error) {
-    res.json({ status: "failure", error: error});
+  USERINFO.findOne({ email: req.body.email}, (err, user) => {
+    if (user) {
+      res.send( {message: "User already registered"} )
     } else {
-    res.json({
-        status: "success",
-        userID: newUser._id,
-        content: req.body
-    });
+      const user = new USERINFO({
+        name: req.body.name,
+        password: req.body.password,
+        email: req.body.email,
+        phone: req.body.phone,
+        posted: req.body.posted,
+        liked: req.body.liked,
+      });
+
+      user.save((error, newUser) => {
+        if (error) {
+        res.send({ message: "Register failed", error: error});
+        } else {
+        res.send({
+            message: "Register succeeded",
+            userID: newUser._id,
+            content: req.body
+          });
+        }
+      })
     }
   })
 });

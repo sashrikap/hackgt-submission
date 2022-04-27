@@ -24,9 +24,11 @@ const Login = () => {
     const login = () => {
         const { email, password } = user
         if (email && password) {
-            alert("Submitting...")
             axios.post("http://localhost:9002/login", user)
-            .then( res => alert(res.data.message) )
+            .then( res => {
+                console.log(res);
+                alert(res.data.message)
+            })
             // should only navigate when the message is successful, wait for backend side
             navigate("/")
         } else {
