@@ -17,24 +17,24 @@ const Homepage = () => {
                 <div className="search-bar">
                     <input type="text" name = "email" placeholder="Search by Keyword"></input>
                     <div className="filterText">Filter by:</div>
-                    <label class="container">
+                    <label className="container">
                         <input type="checkbox"></input>
-                        <span class="checkmark"></span>
+                        <span className="checkmark"></span>
                         type of furniture
                     </label>
-                    <label class="container">
+                    <label className="container">
                         <input type="checkbox"></input>
-                        <span class="checkmark"></span>
+                        <span className="checkmark"></span>
                         price (low-high)
                     </label>
-                    <label class="container">
+                    <label className="container">
                         <input type="checkbox"></input>
-                        <span class="checkmark"></span>
+                        <span className="checkmark"></span>
                         price (high-low)
                     </label>
-                    <label class="container">
+                    <label className="container">
                         <input type="checkbox"></input>
-                        <span class="checkmark"></span>
+                        <span className="checkmark"></span>
                         location
                     </label>
                 </div>
