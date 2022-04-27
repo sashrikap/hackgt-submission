@@ -19,9 +19,20 @@ const Homepage = () => {
           .catch((error) => console.log(error))
     };
 
+    const handleBedroomClick = () => {
+        setCategory(category.concat("Bedroom"));
+        console.log(category);
+    }
+
     const filter = () => {
-        query = {}
-        axios.get("http://localhost:9002/filter", )
+        console.log("in filter");
+        const queryData = {
+            "category" : category,
+            "price" : price,
+            "location" : location
+        };
+        console.log(queryData);
+        axios.get("http://localhost:9002/filter", queryData)
           .then((data) => {
               setData(data.data);
               console.log(data)})
@@ -44,80 +55,78 @@ const Homepage = () => {
                 </div>
                 <div id="homeText">Home</div>
                 <div className="search-bar">
-                    <form action="localhost:9002/filter">
-                        <input type="text" name = "email" placeholder="Search by Keyword"></input>
-                        {/* <div className="filterText">FILTER</div> */}
-                        <div className="category">
-                            <div className="title">Furniture: </div>
-                            <div className="row">
-                                <label class="container">
-                                    <input type="checkbox" onclick=""></input>
-                                    <span class="checkmark"></span>
-                                    <div className="name">Bedroom</div>
-                                </label>
-                                <label class="container">
-                                    <input type="checkbox"></input>
-                                    <span class="checkmark"></span>
-                                    <div className="name">Kitchen</div>
-                                </label>
-                            </div>
-                            <div className="row">
-                                <label class="container">
-                                    <input type="checkbox"></input>
-                                    <span class="checkmark"></span>
-                                    <div className="name">Living room</div>
-                                </label>
-                                {/* <label class="container">
-                                    <input type="checkbox"></input>
-                                    <span class="checkmark"></span>
-                                    <div className="name">Other</div>
-                                </label> */}
-                            </div>
+                    <input type="text" name = "email" placeholder="Search by Keyword"></input>
+                    {/* <div className="filterText">FILTER</div> */}
+                    <div className="category">
+                        <div className="title">Furniture: </div>
+                        <div className="row">
+                            <label class="container">
+                                <input type="checkbox" onChange={handleBedroomClick}></input>
+                                <span class="checkmark"></span>
+                                <div className="name">Bedroom</div>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox"></input>
+                                <span class="checkmark"></span>
+                                <div className="name">Kitchen</div>
+                            </label>
                         </div>
-                        <div className="category">
-                            <div className="title">Price: </div>
-                            <div className="row">
-                                <label class="container">
-                                    <input type="checkbox"></input>
-                                    <span class="checkmark"></span>
-                                    <div className="name">Low to high</div>
-                                </label>
-                                <label class="container">
-                                    <input type="checkbox"></input>
-                                    <span class="checkmark"></span>
-                                    <div className="name">High to low</div>
-                                </label>
-                            </div>
+                        <div className="row">
+                            <label class="container">
+                                <input type="checkbox"></input>
+                                <span class="checkmark"></span>
+                                <div className="name">Living room</div>
+                            </label>
+                            {/* <label class="container">
+                                <input type="checkbox"></input>
+                                <span class="checkmark"></span>
+                                <div className="name">Other</div>
+                            </label> */}
                         </div>
-                        <div className="category">
-                            <div className="title">Location: </div>
-                            <div className="row">
-                                <label class="container">
-                                    <input type="checkbox"></input>
-                                    <span class="checkmark"></span>
-                                    <div className="name">Northside</div>
-                                </label>
-                                <label class="container">
-                                    <input type="checkbox"></input>
-                                    <span class="checkmark"></span>
-                                    <div className="name">Southside</div>
-                                </label>
-                            </div>
-                            <div className="row">
-                                <label class="container">
-                                    <input type="checkbox"></input>
-                                    <span class="checkmark"></span>
-                                    <div className="name">Downtown</div>
-                                </label>
-                                <label class="container">
-                                    <input type="checkbox"></input>
-                                    <span class="checkmark"></span>
-                                    <div className="name">Eastside</div>
-                                </label>
-                            </div>
+                    </div>
+                    <div className="category">
+                        <div className="title">Price: </div>
+                        <div className="row">
+                            <label class="container">
+                                <input type="checkbox"></input>
+                                <span class="checkmark"></span>
+                                <div className="name">Low to high</div>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox"></input>
+                                <span class="checkmark"></span>
+                                <div className="name">High to low</div>
+                            </label>
                         </div>
-                        <button className="searchbut" onclick="filter()">search</button>
-                    </form>
+                    </div>
+                    <div className="category">
+                        <div className="title">Location: </div>
+                        <div className="row">
+                            <label class="container">
+                                <input type="checkbox"></input>
+                                <span class="checkmark"></span>
+                                <div className="name">Northside</div>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox"></input>
+                                <span class="checkmark"></span>
+                                <div className="name">Southside</div>
+                            </label>
+                        </div>
+                        <div className="row">
+                            <label class="container">
+                                <input type="checkbox"></input>
+                                <span class="checkmark"></span>
+                                <div className="name">Downtown</div>
+                            </label>
+                            <label class="container">
+                                <input type="checkbox"></input>
+                                <span class="checkmark"></span>
+                                <div className="name">Eastside</div>
+                            </label>
+                        </div>
+                    </div>
+                    <button className="searchbut" onClick={filter}>search</button>
                 </div>
             </div>
             <div className="right-column">

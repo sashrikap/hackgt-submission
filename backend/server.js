@@ -113,6 +113,7 @@ app.get("/", function (req, res) {
 });
 
 app.get("/filter", function (req, res) {
+  console.log("in server.js");
   console.log(req.body);
   // GET "/filter" should return a list of all posts stored in our database that match the filters
   // TODO: add support for "other"
@@ -130,15 +131,15 @@ app.get("/filter", function (req, res) {
   // ]
 
 
-  if (category) {
+  if (category != []) {
       query.category = {$in: category};
   }
 
-  if (price) {
+  if (price != []) {
       query.price = {$in: price};
   }
 
-  if (location) {
+  if (location != []) {
       query.location = {$in: location};
   }
 
@@ -155,7 +156,7 @@ app.get("/filter", function (req, res) {
     //   {'price': price},
     // ]
   POSTS.find(query).then((feed) => {
-    res.json({ message: "Return all posts.", posts: feed});
+    res.json({ message: "Return filtered posts.", posts: feed});
   })
 });
 
@@ -170,7 +171,7 @@ app.get("/post/:postID", async(req, res) => {
 });
 
 app.post("/newpost/:userID", async(req, res) => {
-  // POST "/add" adds a post to our database
+  // POST "/newpost" adds a post to our database
   var newPostID = new ObjectID();
   const user = await USERINFO.findById(req.params.userID);
   const post = new POSTS({
