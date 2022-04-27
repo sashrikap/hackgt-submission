@@ -147,15 +147,15 @@ input {
   }
 
   .row {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-  
-  .name {
-    display: block;
-    width: fit-content;
-  }
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.name {
+  display: block;
+  width: fit-content;
+}
   
   /* Hide the browser's default checkbox */
   .container input {

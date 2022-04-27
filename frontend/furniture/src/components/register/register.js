@@ -24,14 +24,26 @@ const Register = () => {
         })
     }
 
+    const changePage = (msg) => {
+        if (msg === "Register succeeded") {
+            alert(msg);
+            navigate("/login")
+        } else {
+            alert(msg)
+        }
+    }
+
     const register = () => {
         const { name, email, password, reEnterPassword } = user
         if (name && email && password && (password === reEnterPassword)) {
             axios.post("http://localhost:9002/register", user)
+            .then( res =>  {
+                console.log(res);
+                changePage(res.data.message);
+            })
             // should only navigate when the message is successful, wait for backend side
-            navigate("/login")
         } else {
-            alert("invalid input")
+            alert("invalid input") 
         }
     }
 
