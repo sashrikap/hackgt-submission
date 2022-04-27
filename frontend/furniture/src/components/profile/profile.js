@@ -16,9 +16,10 @@ const Profile = () => {
                 <div id="homeText">Your Profile</div>
                 <div className="biobox">
                     <div/>
-                    <div className="usernameText">Username: dubnation23</div>
-                    <div className="usernameText">Email: gobears123@berkeley.edu</div>
-                    <div className="usernameText">Phone #: 123-456-7890</div>
+                    <img className="profilepic" src={require("./download-5 1.png")} alt="empty profile pic"/>
+                    <div className="usernameText">dubnation23</div>
+                    <div className="emailText">gobears123@berkeley.edu</div>
+                    <div className="phoneText">123-456-7890</div>
                 </div>
             </div>
             <div className="right-column">

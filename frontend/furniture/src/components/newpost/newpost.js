@@ -27,7 +27,7 @@ const Newpost = () => {
                 <div>
                     <input type="text" name = "image" placeholder="Image URL"></input>
                 </div>
-                <button>Post</button>
+                <button className="button-6">Post</button>
             </div>
         </div>
     )
