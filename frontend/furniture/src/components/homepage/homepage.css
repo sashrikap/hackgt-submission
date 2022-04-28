@@ -97,6 +97,7 @@ input {
   margin-top: 10%;
   margin-left: 10%;
   color: white;
+  font-family: 'Sora', sans-serif;;
 }
 
 .category {
@@ -121,7 +122,7 @@ input {
     background: #7F9767;
     border-radius: 20px;
     font-size: large;
-    font-family: Outfit;
+    font-family: 'Sora', sans-serif;;
     font-weight: 300;
 }
 
@@ -139,7 +140,7 @@ input {
     padding-left: 35px;
     margin-bottom: 12px;
     cursor: pointer;
-    font-size: 22px;
+    font-size: 15px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;

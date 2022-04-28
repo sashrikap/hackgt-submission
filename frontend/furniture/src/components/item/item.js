@@ -15,7 +15,7 @@ const Item = ({username, email, decription, price, image}) => {
                 </div>
                 <div className="description">
                     <div>Description:</div>
-                    <div style={{fontSize: 17}}>
+                    <div style={{fontSize: 15}}>
                         {decription}
                     </div>
                 </div>
