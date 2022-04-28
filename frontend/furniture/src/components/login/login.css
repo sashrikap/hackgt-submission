@@ -46,6 +46,11 @@
 .here-text {
     margin: 0px 7px;
     color: rgb(80, 76, 76);
+    cursor:pointer;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    font-family: 'Sora', sans-serif;;
 }
 
 #middleBorder {
