@@ -187,7 +187,7 @@ const Homepage = () => {
                             <label class="container">
                                 <input type="checkbox" onChange={handleLivingRoomClick}></input>
                                 <span class="checkmark"></span>
-                                <div className="name">Living room</div>
+                                <div className="name">Living Room</div>
                             </label>
                             {/* <label class="container">
                                 <input type="checkbox"></input>
@@ -244,7 +244,7 @@ const Homepage = () => {
             <div className="right-column">
                 {
                     data?.posts.map(d =>
-                        <Item username={d.username} email={d.email} decription={d.description} price={d.price} image={d.imageURL}></Item>)
+                        <Item username={d.username} email={d.email} decription={d.description} price={d.price} image={d.imageURL} title={d.title} category={d.category} location={d.location}></Item>)
                 }
             </div>
         </div>
