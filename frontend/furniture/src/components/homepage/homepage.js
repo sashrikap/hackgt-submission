@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import "./homepage.css"
 import Item from '../item/item';
 import axios from 'axios';
+import qs from 'qs';
 
 const Homepage = () => {
     var url = window.location.href
@@ -9,6 +10,16 @@ const Homepage = () => {
     const [category, setCategory] = useState([]);
     const [price, setPrice] = useState([]);
     const [location, setLocation] = useState([]);
+
+    const [bedroom, setBedroom] = useState(false);
+    const [kitchen, setKitchen] = useState(false);
+    const [livingRoom, setLivingRoom] = useState(false);
+
+    const [southside, setSouthside] = useState(false);
+    const [northside, setNorthside] = useState(false);
+    const [downtown, setDowntown] = useState(false);
+    const [eastside, setEastside] = useState(false);
+
 
 
     const getPostsData = () => {
@@ -20,23 +31,93 @@ const Homepage = () => {
     };
 
     const handleBedroomClick = () => {
-        setCategory(category.concat("Bedroom"));
+        setBedroom(!bedroom);
+        if (bedroom) {
+            setCategory(category.filter(item => item !== "Bedroom"));
+        } else {
+            setCategory(category.concat("Bedroom"));
+        }
         console.log(category);
-    }
+    };
+
+    const handleKitchenClick = () => {
+        setKitchen(!kitchen);
+        if (kitchen) {
+            setCategory(category.filter(item => item !== "Kitchen"));
+        } else {
+            setCategory(category.concat("Kitchen"));
+        }
+        console.log(category);
+    };
+
+    const handleLivingRoomClick = () => {
+        setLivingRoom(!livingRoom);
+        if (livingRoom) {
+            setCategory(category.filter(item => item !== "Living Room"));
+        } else {
+            setCategory(category.concat("Living Room"));
+        }
+        console.log(category);
+    };
+
+    const handleNorthsideClick = () => {
+        setNorthside(!northside);
+        if (northside) {
+            setLocation(category.filter(item => item !== "Northside"));
+        } else {
+            setLocation(location.concat("Northside"));
+        }
+        console.log(location);
+    };
+
+    const handleSouthsideClick = () => {
+        setSouthside(!southside);
+        if (southside) {
+            setLocation(category.filter(item => item !== "Southside"));
+        } else {
+            setLocation(location.concat("Southside"));
+        }
+        console.log(location);
+    };
+
+    const handleEastsideClick = () => {
+        setEastside(!eastside);
+        if (eastside) {
+            setLocation(category.filter(item => item !== "Eastside"));
+        } else {
+            setLocation(location.concat("Eastside"));
+        }
+        console.log(location);
+    };
+
+    const handleDowntownClick = () => {
+        setDowntown(!downtown);
+        if (downtown) {
+            setLocation(category.filter(item => item !== "Downtown"));
+        } else {
+            setLocation(location.concat("Downtown"));
+        }
+        console.log(location);
+    };
 
     const filter = () => {
         console.log("in filter");
         const queryData = {
-            "category" : category,
-            "price" : price,
-            "location" : location
+            category : category,
+            price : price,
+            location : location
         };
-        console.log(queryData);
-        axios.get("http://localhost:9002/filter", queryData)
-          .then((data) => {
-              setData(data.data);
-              console.log(data)})
-          .catch((error) => console.log(error))
+
+        
+        axios.get("http://localhost:9002/filter", {
+            params: queryData,
+            // paramsSerializer: (params) => {
+            //     return qs.stringify(params, { arrayFormat: 'repeat' })
+            // },
+        }).then((data) => {
+            setData(data.data);
+            console.log(data)})
+        .catch((error) => console.log(error))
     };
 
     useEffect(() => {
@@ -66,14 +147,14 @@ const Homepage = () => {
                                 <div className="name">Bedroom</div>
                             </label>
                             <label class="container">
-                                <input type="checkbox"></input>
+                                <input type="checkbox" onChange={handleKitchenClick}></input>
                                 <span class="checkmark"></span>
                                 <div className="name">Kitchen</div>
                             </label>
                         </div>
                         <div className="row">
                             <label class="container">
-                                <input type="checkbox"></input>
+                                <input type="checkbox" onChange={handleLivingRoomClick}></input>
                                 <span class="checkmark"></span>
                                 <div className="name">Living room</div>
                             </label>
@@ -103,24 +184,24 @@ const Homepage = () => {
                         <div className="title">Location: </div>
                         <div className="row">
                             <label class="container">
-                                <input type="checkbox"></input>
+                                <input type="checkbox" onChange={handleNorthsideClick}></input>
                                 <span class="checkmark"></span>
                                 <div className="name">Northside</div>
                             </label>
                             <label class="container">
-                                <input type="checkbox"></input>
+                                <input type="checkbox" onChange={handleSouthsideClick}></input>
                                 <span class="checkmark"></span>
                                 <div className="name">Southside</div>
                             </label>
                         </div>
                         <div className="row">
                             <label class="container">
-                                <input type="checkbox"></input>
+                                <input type="checkbox" onChange={handleDowntownClick}></input>
                                 <span class="checkmark"></span>
                                 <div className="name">Downtown</div>
                             </label>
                             <label class="container">
-                                <input type="checkbox"></input>
+                                <input type="checkbox" onChange={handleEastsideClick}></input>
                                 <span class="checkmark"></span>
                                 <div className="name">Eastside</div>
                             </label>

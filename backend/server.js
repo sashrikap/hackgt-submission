@@ -114,48 +114,38 @@ app.get("/", function (req, res) {
 
 app.get("/filter", function (req, res) {
   console.log("in server.js");
-  console.log(req.body);
+  console.log(req.query);
+  
   // GET "/filter" should return a list of all posts stored in our database that match the filters
-  // TODO: add support for "other"
 
-  // the following consts are all arrays?
-  const category = req.body.category;
-  const price = req.body.price;
-  const location = req.body.location;
+  // the following consts are all arrays
+
+  // below code works with postman, not with actual website
+  // const category = req.body.category;
+  // const price = req.body.price;
+  // const location = req.body.location;
+  // var query = {};
+
+  const category = req.query.category;
+  const price = req.query.price;
+  const location = req.query.location;
   var query = {};
 
-  // query = $and: [
-  //   "category" : {$in: category},
-  //   "price" : {$in: price},
-  //   "location" : {$in: location},
-  // ]
-
-
-  if (category != []) {
+  if (Array.isArray(category) && category.length) {
       query.category = {$in: category};
   }
 
-  if (price != []) {
+  if (Array.isArray(price) && price.length) {
       query.price = {$in: price};
   }
 
-  if (location != []) {
+  if (Array.isArray(location) && location.length) {
       query.location = {$in: location};
   }
 
-  // $and: [
-    //   {'category': { $exists: true }},
-    //   {'category': category},
-    // ],
-    // $and: [
-    //   {'location': { $exists: true }},
-    //   {'location': location},
-    // ],
-    // $and: [
-    //   {'price': { $exists: true }},
-    //   {'price': price},
-    // ]
-  POSTS.find(query).then((feed) => {
+  console.log(query);
+  
+  POSTS.find(req.query).then((feed) => {
     res.json({ message: "Return filtered posts.", posts: feed});
   })
 });
