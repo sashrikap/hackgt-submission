@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import "./item.css"
 
-const Item = ({username, email, decription, price, image}) => {
+const Item = ({username, email, decription, price, image, title, category}) => {
     
     return (
         <div className="item">
@@ -12,6 +12,8 @@ const Item = ({username, email, decription, price, image}) => {
                 <div className="username">
                     <div>Seller:</div>
                     <div style={{marginLeft: 20}}>{username}</div>
+                    <div style={{marginLeft: 40}}>Title: </div>
+                    <div style={{marginLeft: 20}}>{title}</div>
                 </div>
                 <div className="description">
                     <div>Description:</div>
