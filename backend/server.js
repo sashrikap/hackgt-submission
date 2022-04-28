@@ -112,6 +112,20 @@ app.get("/", function (req, res) {
   })
 });
 
+app.get("/sortlh", function (req, res) {
+  // GET "/" should return a list of all posts stored in our database
+  POSTS.find().sort( { price: 1 } ).then((feed) => {
+    res.send({ message: "Return all posts.", posts: feed});
+  })
+});
+
+app.get("/sorthl", function (req, res) {
+  // GET "/" should return a list of all posts stored in our database
+  POSTS.find().sort( { price: -1 } ).then((feed) => {
+    res.send({ message: "Return all posts.", posts: feed});
+  })
+});
+
 app.get("/filter", function (req, res) {
   console.log("in server.js");
   console.log(req.query);
@@ -127,16 +141,11 @@ app.get("/filter", function (req, res) {
   // var query = {};
 
   const category = req.query.category;
-  const price = req.query.price;
   const location = req.query.location;
   var query = {};
 
   if (Array.isArray(category) && category.length) {
       query.category = {$in: category};
-  }
-
-  if (Array.isArray(price) && price.length) {
-      query.price = {$in: price};
   }
 
   if (Array.isArray(location) && location.length) {

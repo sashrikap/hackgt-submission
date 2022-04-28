@@ -8,7 +8,6 @@ const Homepage = () => {
     var url = window.location.href
     const [data, setData] = useState();
     const [category, setCategory] = useState([]);
-    const [price, setPrice] = useState([]);
     const [location, setLocation] = useState([]);
 
     const [bedroom, setBedroom] = useState(false);
@@ -20,7 +19,8 @@ const Homepage = () => {
     const [downtown, setDowntown] = useState(false);
     const [eastside, setEastside] = useState(false);
 
-
+    const [sortlh, setSortlh] = useState(false);
+    const [sorthl, setSorthl] = useState(false);
 
     const getPostsData = () => {
         axios.get("http://localhost:9002/")
@@ -99,12 +99,27 @@ const Homepage = () => {
         }
         console.log(location);
     };
+    
+    const handleSortLHClick = () => {
+        setSortlh(!sortlh);
+        console.log("sort low to high: " + sortlh);
+    }
+
+    const handleSortHLClick = () => {
+        setSorthl(!sorthl);
+        console.log("sort high to low: " + sorthl);
+    }
 
     const filter = () => {
+        if (sortlh) {
+            lowToHigh();
+        }
+        if (sorthl) {
+            highToLow();
+        }
         console.log("in filter");
         const queryData = {
             category : category,
-            price : price,
             location : location
         };
 
@@ -118,6 +133,22 @@ const Homepage = () => {
             setData(data.data);
             console.log(data)})
         .catch((error) => console.log(error))
+    };
+
+    const lowToHigh = () => {
+        axios.get("http://localhost:9002/sortlh")
+          .then((data) => {
+              setData(data.data);
+              console.log(data)})
+          .catch((error) => console.log(error))
+    };
+
+    const highToLow = () => {
+        axios.get("http://localhost:9002/sorthl")
+          .then((data) => {
+              setData(data.data);
+              console.log(data)})
+          .catch((error) => console.log(error))
     };
 
     useEffect(() => {
@@ -169,12 +200,12 @@ const Homepage = () => {
                         <div className="title">Price: </div>
                         <div className="row">
                             <label class="container">
-                                <input type="checkbox"></input>
+                                <input type="checkbox" onChange={handleSortLHClick}></input>
                                 <span class="checkmark"></span>
                                 <div className="name">Low to high</div>
                             </label>
                             <label class="container">
-                                <input type="checkbox"></input>
+                                <input type="checkbox" onChange={handleSortHLClick}></input>
                                 <span class="checkmark"></span>
                                 <div className="name">High to low</div>
                             </label>
