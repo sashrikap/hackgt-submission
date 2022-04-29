@@ -24,10 +24,7 @@ const Login = () => {
     
     const changePage = (msg, id) => {
         if (msg === "Log in succeeded") {
-            alert(msg);
             navigate("/" + id)
-        } else {
-            alert(msg)
         }
     }
 
@@ -37,6 +34,7 @@ const Login = () => {
             axios.post("http://localhost:9002/login", user)
             .then( res => {
                 console.log(res);
+                alert(res.data.message);
                 changePage(res.data.message, res.data.user._id);
             })
             // should only navigate when the message is successful, wait for backend side

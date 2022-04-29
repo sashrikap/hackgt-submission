@@ -17,7 +17,7 @@ function App() {
         <div className='circle'>
           <Routes>
             <Route path='/:userID' element={< Homepage />} ></Route>
-            <Route exact path='/login' element={< Login />}></Route>
+            <Route exact path='/' element={< Login />}></Route>
             <Route exact path='/register' element={< Register />}></Route>
             <Route path='/newpost/:userID' element={< Newpost />}></Route>
             <Route path='/profile/:userID' element={< Profile />}></Route>
