@@ -27,7 +27,7 @@ const Register = () => {
     const changePage = (msg) => {
         if (msg === "Register succeeded") {
             alert(msg);
-            navigate("/login")
+            navigate("/")
         } else {
             alert(msg)
         }
