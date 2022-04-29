@@ -10,4 +10,3 @@ Students moving out of their apartments or trying to furnish new ones currently 
 1. Create two databases in mongo: ```userinfo``` and ```posts```.
 2. Navigate to ```backend``` folder and run ```node server.js```.
 3. New a terminal and navigate to the ```frontend/furniture``` folder. Run ``` npm i``` and then ```npm start```. The website will show up.
-* 
