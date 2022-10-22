@@ -53,10 +53,22 @@ const Newpost = () => {
                     <input type="number" name = "price" defaultValue = {post.price} onChange={ handleChange} placeholder="Price"></input>
                 </div>
                 <div>
-                    <input type="text" name = "location" defaultValue = {post.location} onChange={ handleChange} placeholder="Location"></input>
+                    <select className="newPostSelect" defaultValue={post.location} onChange={handleChange}>
+                        <option value="">Select Location</option>
+                        <option value="northside">Northside</option>
+                        <option value="southside">Southside</option>
+                        <option value="eastside">Eastside</option>
+                        <option value="downtown">Downtown</option>
+                    </select>
                 </div>
                 <div>
-                    <input type="text" name = "category" defaultValue = {post.category} onChange={ handleChange} placeholder="Type of Furniture"></input>
+                    <select className="newPostSelect" defaultValue={post.category} onChange={handleChange}>
+                        <option value="">Select Category</option>
+                        <option value="furniture">Furniture</option>
+                        <option value="knickknacks">Knickknacks</option>
+                        <option value="games">Games</option>
+                        <option value="vinyl">Vinyl</option>
+                    </select>
                 </div>
                 <div>
                     <input type="text" name = "imageURL" defaultValue = {post.imageURL} onChange={ handleChange} placeholder="Image URL"></input>

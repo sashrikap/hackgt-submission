@@ -25,7 +25,7 @@ const NavStart = () => {
     
     return (
         <div className="navstart">
-            <div className="title">Find your furniture</div>
+            <div className="title">Time Machine</div>
             <div className="options">
                 <div className="option" onClick={routeChangeHome}>Home</div>
                 <div className="option" onClick={routeChangeNewPost}>New Post</div>

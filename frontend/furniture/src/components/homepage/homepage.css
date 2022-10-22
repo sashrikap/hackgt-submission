@@ -32,25 +32,25 @@
 
 #l1 {
     width: 25%;
-    background-color: #7F9767;
+    background-color: #E1D0FC;
     border-radius: 25px;
 }
 
 #l2 {
     width: 17%;
-    background-color: #7F9767;
+    background-color: #E791EA;
     border-radius: 25px;
 }
 
 #l3 {
     width: 10%;
-    background-color: #7F9767;
+    background-color: #8f28e3;
     border-radius: 25px;
 }
 
 #l4 {
     width: 6%;
-    background-color: #7F9767;
+    background-color: #5603AD;
     border-radius: 25px;
 }
 
@@ -65,23 +65,24 @@ input {
     border: 2px solid #dddfe2;
     outline: none;
     color: #1d2129;
-    padding: 0.5rem 1rem;
-    width: 85%;
+    padding: 0.5rem;
+    margin: 4px;
     font-size: 1rem;
 }
 
-.filterText {
+/* .filterText {
     font-size: 20px;
     width: 90px;
     margin: 20px 0px;
     font-weight: 300;
-}
+} */
 
 .search-bar {
   margin-top: 12%;
   width: 80%;
   height: 70%;
-  background: #7F9767;
+  background: #5603AD;
+  color: white;
   padding: 7% 10%;
   border-radius: 40px;
 }
@@ -89,8 +90,9 @@ input {
 .searchbut {
   height: 10%;
   width: 80%;
-  background-color: rgb(57, 75, 57);
+  background-color: #d085e5;
   border-radius: 25px;
+  border-color: #d085e5;
   text-align: center;
   line-height: 200%;
   font-size: 20px;
@@ -107,7 +109,7 @@ input {
 .category > .title {
   font-size: 20px;
   font-weight: 400;
-  color: #1d2129;
+  color: #E1D0FC;
   width: fit-content;
   margin-bottom: 10px;
 }
@@ -119,7 +121,7 @@ input {
     width: 100%;
     margin-top: 20%;
     height: 60px;
-    background: #7F9767;
+    background: #8f28e3;
     border-radius: 20px;
     font-size: large;
     font-family: 'Sora', sans-serif;;
@@ -130,7 +132,7 @@ input {
     width: 55%;
     height: 650px;
     overflow-y: scroll;
-    scrollbar-color: rebeccapurple green;
+    scrollbar-color: rebeccapurple rgb(72, 169, 215);
     scrollbar-width: thin;
 }
 /* Customize the label (the container) */
@@ -139,9 +141,10 @@ input {
     width: 100%;
     position: relative;
     padding-left: 30px;
+    /* padding-right: 30px; */
     margin-bottom: 12px;
     cursor: pointer;
-    font-size: 15px;
+    /* font-size: 15px; */
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -157,6 +160,7 @@ input {
 
 .name {
   display: block;
+  width: -moz-fit-content;
   width: fit-content;
 }
   
@@ -186,7 +190,7 @@ input {
   
   /* When the checkbox is checked, add a blue background */
   .container input:checked ~ .checkmark {
-    background-color: #2196F3;
+    background-color: #d085e5;
   }
   
   /* Create the checkmark/indicator (hidden when not checked) */

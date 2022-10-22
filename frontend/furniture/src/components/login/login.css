@@ -27,7 +27,7 @@
 }
 
 .login > .button {
-    background: #63853F;
+    background: #5603AD;
     color: #fff;
     font-size: 1.25rem;
     padding: 1.2rem 2rem;
@@ -50,7 +50,7 @@
 }
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    font-family: 'Sora', sans-serif;;
+    font-family: 'Sora', sans-serif;
 }
 
 #middleBorder {

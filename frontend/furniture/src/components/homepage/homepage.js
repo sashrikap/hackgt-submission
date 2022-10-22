@@ -10,9 +10,10 @@ const Homepage = () => {
     const [category, setCategory] = useState([]);
     const [location, setLocation] = useState([]);
 
-    const [bedroom, setBedroom] = useState(false);
-    const [kitchen, setKitchen] = useState(false);
-    const [livingRoom, setLivingRoom] = useState(false);
+    const [furniture, setFurniture] = useState(false);
+    const [knickknacks, setKnickknacks] = useState(false);
+    const [games, setGames] = useState(false);
+    const [vinyl, setVinyl] = useState(false);
 
     const [southside, setSouthside] = useState(false);
     const [northside, setNorthside] = useState(false);
@@ -30,32 +31,42 @@ const Homepage = () => {
           .catch((error) => console.log(error))
     };
 
-    const handleBedroomClick = () => {
-        setBedroom(!bedroom);
-        if (bedroom) {
-            setCategory(category.filter(item => item !== "Bedroom"));
+    const handleFurnitureClick = () => {
+        setFurniture(!furniture);
+        if (furniture) {
+            setCategory(category.filter(item => item !== "Furniture"));
         } else {
-            setCategory(category.concat("Bedroom"));
+            setCategory(category.concat("Furniture"));
         }
         console.log(category);
     };
 
-    const handleKitchenClick = () => {
-        setKitchen(!kitchen);
-        if (kitchen) {
-            setCategory(category.filter(item => item !== "Kitchen"));
+    const handleKnickknacksClick = () => {
+        setKnickknacks(!knickknacks);
+        if (knickknacks) {
+            setCategory(category.filter(item => item !== "Knickknacks"));
         } else {
-            setCategory(category.concat("Kitchen"));
+            setCategory(category.concat("Knickknacks"));
         }
         console.log(category);
     };
 
-    const handleLivingRoomClick = () => {
-        setLivingRoom(!livingRoom);
-        if (livingRoom) {
-            setCategory(category.filter(item => item !== "Living Room"));
+    const handleGamesClick = () => {
+        setGames(!games);
+        if (games) {
+            setCategory(category.filter(item => item !== "Games"));
         } else {
-            setCategory(category.concat("Living Room"));
+            setCategory(category.concat("Games"));
+        }
+        console.log(category);
+    };
+
+    const handleVinylClick = () => {
+        setVinyl(!vinyl);
+        if (vinyl) {
+            setCategory(category.filter(item => item !== "Vinyl"));
+        } else {
+            setCategory(category.concat("Vinyl"));
         }
         console.log(category);
     };
@@ -170,30 +181,30 @@ const Homepage = () => {
                     <input type="text" name = "email" placeholder="Search by Keyword"></input>
                     {/* <div className="filterText">FILTER</div> */}
                     <div className="category">
-                        <div className="title">Furniture: </div>
+                        <div className="title">Category: </div>
                         <div className="row">
                             <label class="container">
-                                <input type="checkbox" onChange={handleBedroomClick}></input>
+                                <input type="checkbox" onChange={handleFurnitureClick}></input>
                                 <span class="checkmark"></span>
-                                <div className="name">Bedroom</div>
+                                <div className="name">Furniture</div>
                             </label>
                             <label class="container">
-                                <input type="checkbox" onChange={handleKitchenClick}></input>
+                                <input type="checkbox" onChange={handleKnickknacksClick}></input>
                                 <span class="checkmark"></span>
-                                <div className="name">Kitchen</div>
+                                <div className="name">Knickknacks</div>
                             </label>
                         </div>
                         <div className="row">
                             <label class="container">
-                                <input type="checkbox" onChange={handleLivingRoomClick}></input>
+                                <input type="checkbox" onChange={handleGamesClick}></input>
                                 <span class="checkmark"></span>
-                                <div className="name">Living Room</div>
+                                <div className="name">Games</div>
                             </label>
-                            {/* <label class="container">
-                                <input type="checkbox"></input>
+                            <label class="container">
+                            <input type="checkbox" onChange={handleVinylClick}></input>
                                 <span class="checkmark"></span>
-                                <div className="name">Other</div>
-                            </label> */}
+                                <div className="name">Vinyl</div>
+                            </label>
                         </div>
                     </div>
                     <div className="category">

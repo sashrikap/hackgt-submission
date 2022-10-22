@@ -50,8 +50,8 @@ const Register = () => {
     return (
         <div className="register">
             <div style={{fontSize: 55}}>Welcome</div>
-            <div style={{fontSize: 20, marginTop: 20, marginBottom:20}}>This furniture website is built to help berkeley students find furnitures.</div>
-            <div className="signUpText">Sign Up</div>
+            <div style={{fontSize: 20, marginTop: 20, marginBottom:20}}>An antiques and knickknacks marketplace for retro folks!</div>
+            <strong><div className="signUpText">Sign Up</div></strong>
             <input type="text" name = "name" value = {user.name} placeholder="Your Name" onChange={ handleChange} ></input>
             <input type="text" name = "email" value = {user.email} placeholder="Your Email" onChange={ handleChange} ></input>
             <input type="password" name = "password" value = {user.password} placeholder="Your Password" onChange={ handleChange } ></input>

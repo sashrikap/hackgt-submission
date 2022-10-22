@@ -11,7 +11,7 @@
 .title {
     font-size: 20px;
     font-weight: bold;
-    color: #3a5f11;
+    color: #5603AD;
 }
 
 .options {
@@ -23,10 +23,10 @@
 .option {
     height: 60%;
     font-size: 20px;
-    color: #3a5f11;
+    color: #5603AD;
     cursor: pointer;
 }
 
 .option:hover {
-    border-bottom: #3a5f11 2px solid;
+    border-bottom: #5603AD 2px solid;
 }

@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import "./item.css"
 
-const Item = ({username, email, decription, price, image, title, category, location}) => {
+const Item = ({username, email, description, price, image, title, category, location}) => {
     
     return (
         <div className="item">
@@ -18,7 +18,7 @@ const Item = ({username, email, decription, price, image, title, category, locat
                 <div className="description">
                     <div>Description:</div>
                     <div style={{fontSize: 15}}>
-                        {decription}
+                        {description}
                     </div>
                 </div>
                 <div className="price">
