@@ -67,7 +67,7 @@ const Profile = () => {
             <div className="right-column">
                 {
                     data?.posts.map(d =>
-                        <Item username={d.username} email={d.email} decription={d.description} price={d.price} image={d.imageURL} title={d.title} category={d.category} location={d.location}></Item>)
+                        <Item username={d.username} email={d.email} description={d.description} price={d.price} image={d.imageURL} title={d.title} category={d.category} location={d.location}></Item>)
                 }
             </div>
         </div>

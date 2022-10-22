@@ -29,7 +29,7 @@
     width: 60%;
     margin-left: 30px;
     font-family: 'Sora', sans-serif;;
-    font-weight: 200;
+    font-weight: 3vw;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -37,27 +37,25 @@
 
 .username {
     display: flex;
-    font-size: 19px;
+    /* font-size: 19px; */
+}
+
+.label {
+    /* font-weight: bolder; */
 }
 
 .description {
-    font-size: 19px;
+    /* font-size: 19px; */
     display: block;
     text-align: left;
 }
 
 .price {
     display: flex;
-    font-size: 19px;
+    /* font-size: 19px; */
 }
 
 .tags {
     display: flex;
-    font-size: 19px;
-}
-
-.each-tag {
-    width: 90%;
-    display: flex;
-    justify-content: space-around;
+    /* font-size: 19px; */
 }
