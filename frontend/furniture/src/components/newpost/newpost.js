@@ -18,6 +18,8 @@ const Newpost = () => {
 
     const handleChange = e => {
         const { name, value } = e.target;
+        console.log("name: ", name);
+        console.log("value: ", value);
         setPost({
             ...post,
             [name]: value
@@ -53,21 +55,21 @@ const Newpost = () => {
                     <input type="number" name = "price" defaultValue = {post.price} onChange={ handleChange} placeholder="Price"></input>
                 </div>
                 <div>
-                    <select className="newPostSelect" defaultValue={post.location} onChange={handleChange}>
+                    <select name="location" className="newPostSelect" defaultValue={post.location} onChange={handleChange}>
                         <option value="">Select Location</option>
-                        <option value="northside">Northside</option>
-                        <option value="southside">Southside</option>
-                        <option value="eastside">Eastside</option>
-                        <option value="downtown">Downtown</option>
+                        <option value="Northside">Northside</option>
+                        <option value="Southside">Southside</option>
+                        <option value="Eastside">Eastside</option>
+                        <option value="Downtown">Downtown</option>
                     </select>
                 </div>
                 <div>
-                    <select className="newPostSelect" defaultValue={post.category} onChange={handleChange}>
+                    <select name="category" className="newPostSelect" defaultValue={post.category} onChange={handleChange}>
                         <option value="">Select Category</option>
-                        <option value="furniture">Furniture</option>
-                        <option value="knickknacks">Knickknacks</option>
-                        <option value="games">Games</option>
-                        <option value="vinyl">Vinyl</option>
+                        <option value="Furniture">Furniture</option>
+                        <option value="Knickknacks">Knickknacks</option>
+                        <option value="Games">Games</option>
+                        <option value="Vinyl">Vinyl</option>
                     </select>
                 </div>
                 <div>

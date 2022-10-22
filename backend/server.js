@@ -10,8 +10,8 @@ app.use(cors())
 
 const mongoose = require('mongoose')
 
-const dbPosts = mongoose.createConnection("mongodb://127.0.0.1:27017/posts");
-const dbUserInfo = mongoose.createConnection("mongodb://127.0.0.1:27017/userinfo");
+const dbPosts = mongoose.createConnection("mongodb://127.0.0.1:27017/postsnew");
+const dbUserInfo = mongoose.createConnection("mongodb://127.0.0.1:27017/userinfonew");
 
 
 dbPosts.once('open', _ => {

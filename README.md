@@ -1,4 +1,4 @@
-# Time Machine
+# RetroList
 
 ## Project Idea
 An antiques and knickknacks marketplace for retro folks!

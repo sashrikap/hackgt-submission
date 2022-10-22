@@ -35,13 +35,14 @@
     justify-content: space-between;
 }
 
-.username {
+.itemInfo {
     display: flex;
     /* font-size: 19px; */
 }
 
 .label {
-    /* font-weight: bolder; */
+    display: flex;
+    font-weight: bolder;
 }
 
 .description {
@@ -50,7 +51,7 @@
     text-align: left;
 }
 
-.price {
+.sellerInfo {
     display: flex;
     /* font-size: 19px; */
 }
@@ -58,4 +59,8 @@
 .tags {
     display: flex;
     /* font-size: 19px; */
+}
+
+.mailto {
+    color: #5603AD;
 }

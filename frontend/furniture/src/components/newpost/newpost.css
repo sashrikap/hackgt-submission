@@ -70,7 +70,7 @@ select {
      background-color: #E791EA;
      border: 1px solid #a361a5;
      border-radius: .9rem;
-     box-shadow: #a361a5 0 1px 3px 0;
+     /* box-shadow: #a361a5 0 1px 3px 0; */
      box-sizing: border-box;
      color: rgba(0, 0, 0, 0.85);
      cursor: pointer;
@@ -96,8 +96,8 @@ select {
 .button-6:hover,
 .button-6:focus {
     border-color: #a361a5;
-    box-shadow: #a361a5 0 4px 12px;
-    color: rgba(0, 0, 0, 0.65);
+    /* box-shadow: #a361a5 0 4px 12px; */
+    /* color: rgba(0, 0, 0, 0.65); */
 }
 
 .button-6:hover {
@@ -106,8 +106,8 @@ select {
 
 .button-6:active {
     background-color: #F0F0F1;
-    border-color: rgba(0, 0, 0, 0.15);
-    box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
-    color: rgba(0, 0, 0, 0.65);
+    border-color: #a361a5;
+    /* box-shadow: #a361a5 0 2px 4px; */
+    /* color: rgba(0, 0, 0, 0.65); */
     transform: translateY(0);
 }
